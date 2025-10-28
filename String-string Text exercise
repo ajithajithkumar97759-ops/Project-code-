@@ -1,0 +1,7 @@
+str1 = "Python"
+str2 = "pYtHon"
+
+if str1.lower() == str2.lower():
+    print("Strings are equal (case-insensitive)")
+else:
+    print("Strings are not equal")
