@@ -1,0 +1,68 @@
+import csv
+
+def read_csv_file(filename):
+    """Reads data from a CSV file and returns it as a list of lists."""
+    data = []
+    try:
+        with open(filename, 'r', newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                data.append(row)
+        print(f"Successfully read data from '{filename}'.")
+        return data
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        return None
+    except Exception as e:
+        print(f"An error occurred while reading the file: {e}")
+        return None
+
+def write_csv_file(filename, data, header=None):
+    """Writes data to a CSV file. Optionally includes a header row."""
+    try:
+        with open(filename, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            if header:
+                writer.writerow(header)
+            writer.writerows(data)
+        print(f"Successfully wrote data to '{filename}'.")
+    except Exception as e:
+        print(f"An error occurred while writing the file: {e}")
+
+def main():
+    # --- Example Usage ---
+
+    # 1. Writing data to a CSV file
+    output_filename = 'example.csv'
+    header = ['Name', 'Age', 'City']
+    data_to_write = [
+        ['Alice', 30, 'New York'],
+        ['Bob', 24, 'London'],
+        ['Charlie', 35, 'Paris']
+    ]
+    write_csv_file(output_filename, data_to_write, header=header)
+
+    # 2. Reading data from the CSV file
+    read_data = read_csv_file(output_filename)
+    if read_data:
+        print("\nContent of the read CSV file:")
+        for row in read_data:
+            print(row)
+
+    # 3. Writing data without a header
+    no_header_filename = 'no_header_example.csv'
+    data_without_header = [
+        ['David', 40, 'Berlin'],
+        ['Eve', 28, 'Rome']
+    ]
+    write_csv_file(no_header_filename, data_without_header)
+
+    # 4. Reading data from the file without a header
+    read_no_header_data = read_csv_file(no_header_filename)
+    if read_no_header_data:
+        print("\nContent of the no-header CSV file:")
+        for row in read_no_header_data:
+            print(row)
+
+if __name__ == "__main__":
+    main()
